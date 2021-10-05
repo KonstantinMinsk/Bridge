@@ -37,7 +37,45 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "airbnb"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts?(x)"
+        ],
+        "rules": {
+          "no-use-before-define": "off",
+          "object-curly-newline": 0,
+          "arrow-body-style": [
+            "error",
+            "always"
+          ],
+          "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+              "ts": "never",
+              "tsx": "never"
+            }
+          ],
+          "react/jsx-filename-extension": [
+            1,
+            {
+              "extensions": [
+                ".js",
+                ".jsx"
+              ]
+            }
+          ]
+        },
+        "settings": {
+          "import/resolver": {
+            "typescript": {}
+          }
+        }
+      }
     ]
   },
   "browserslist": {
