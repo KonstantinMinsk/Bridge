@@ -9,7 +9,7 @@ export default function SingInForm() {
   const onSubmit = () => {};
 
   return (
-    <Grid item lg={4} sm={6} xs={12}>
+    <Grid item lg={4} sm={6} xs={11}>
       <form onSubmit={onSubmit} className={classes.form}>
         <h2>Sing in to your account</h2>
         <Input variant="outlined" lable="Login" />

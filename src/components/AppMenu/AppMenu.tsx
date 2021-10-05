@@ -1,20 +1,35 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import { NavLink } from 'react-router-dom';
 import useStyles from './styles';
+import Routes from '../../routing/routes';
 
 export default function AppMenu() {
   const classes = useStyles();
 
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <span>Bridge</span>
-        <div className={classes.wrapperButtons}>
-          <Button color="inherit">Logout</Button>
-        </div>
-      </Toolbar>
-    </AppBar>
+    <Grid
+      container
+      className={classes.appbar}
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Grid
+        item
+        lg={8}
+        sm={10}
+        xs={11}
+        container
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <NavLink exact to={Routes.Home.path} className={classes.link}>
+          {Routes.Home.name}
+        </NavLink>
+        <NavLink to={Routes.Login.path} className={classes.link}>
+          {Routes.Login.name}
+        </NavLink>
+      </Grid>
+    </Grid>
   );
 }
