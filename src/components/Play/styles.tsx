@@ -28,16 +28,21 @@ const useStyles = makeStyles(() => {
       justifyContent: 'space-between',
       alignSelf: 'center',
     },
-    button: {
+    buttons: {
       display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
+      justifyContent: 'space-evenly',
+      alignItems: ({ isModePlay }: { isModePlay: boolean | null }) => {
+        return isModePlay ? 'space-between' : 'center';
+      },
+    },
+    divider: {
+      margin: '0 16px 0',
     },
     card: {
       border: '2px solid #000',
       borderRadius: 4,
-      width: 160,
-      height: 240,
+      width: 226,
+      height: 314,
       ...stylesFlex.flexColumn,
     },
     questionMark: {

@@ -5,4 +5,5 @@ export interface ButtonProps {
   variant: 'contained';
   content: React.ReactNode;
   size?: 'small' | 'medium' | 'large';
+  onClick?: any;
 }

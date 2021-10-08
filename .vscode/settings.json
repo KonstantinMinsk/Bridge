@@ -1,0 +1,8 @@
+{
+  "prettier.trailingComma": "all",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "typescript.suggestionActions.enabled": false,
+  "prettier.requireConfig": true,
+  "prettier.jsxBracketSameLine": true,
+  "prettier.printWidth": 120
+}
