@@ -6,9 +6,10 @@ import useStyles from './styles';
 import { useFetchPairCard } from '../../hooks/react-query';
 import { optionChooseCards } from '../../enum';
 import { bidAmount, namesCards, valueCards } from '../../constants';
+import useStore from '../../store';
 
 export default function Play({ dataFetchDeskID }: { dataFetchDeskID: any }) {
-  const [balance, setBalance] = useState<number>(100);
+  const { balance, payForPlay, incrementBalance } = useStore();
   const [winner, setWinner] = useState<boolean | null>(null);
   const [isModePlay, setIsModePlay] = useState<boolean | null>(null);
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
@@ -19,13 +20,10 @@ export default function Play({ dataFetchDeskID }: { dataFetchDeskID: any }) {
   useEffect(() => {
     const data: any = fetchPairCard?.data?.data;
     if (data?.cards.length) setCards(data.cards);
-    // return () => {
-    //   cleanup;
-    // };
   }, [isModePlay, fetchPairCard?.data?.data]);
 
   const onHandlePlay = () => {
-    setBalance((prev) => { return prev - bidAmount; });
+    payForPlay(bidAmount);
     setSelectedCard(null);
     setWinner(null);
     return setIsModePlay((prev) => {
@@ -41,7 +39,7 @@ export default function Play({ dataFetchDeskID }: { dataFetchDeskID: any }) {
   const onHandleCard = (chosenCard: number) => {
     const isWinnner = definedWinner(chosenCard);
     setWinner(isWinnner);
-    setBalance((prev) => { return (isWinnner ? prev + bidAmount * 2 : prev); });
+    if (isWinnner) incrementBalance(bidAmount * 2);
     setSelectedCard(namesCards[chosenCard]);
     setIsModePlay((prev) => {
       return !prev;
