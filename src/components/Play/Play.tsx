@@ -15,10 +15,8 @@ export default function Play({ deskID }: { deskID: any }) {
 	const [selectedCard, setSelectedCard] = useState<string | null>(null);
 	const classes = useStyles({ isModePlay });
 	const fetchPairCard = useFetchPairCard(deskID, isModePlay);
-	const { remainingCards, updateRemainingCards } = useStore();
+	const { updateRemainingCards } = useStore();
 	const [cards, setCards] = useState<any[]>([]);
-
-	if (!remainingCards) console.log(fetchPairCard);
 
 	useEffect(() => {
 		const data: any = fetchPairCard?.data?.data;

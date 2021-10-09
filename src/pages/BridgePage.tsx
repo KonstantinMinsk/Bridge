@@ -6,17 +6,12 @@ import useStore from '../store';
 import { countCardsInPlay } from '../constants';
 
 const BridgePage = () => {
-	const queryInfo = useFetchDeskID();
+	const { isLoading, data }: any = useFetchDeskID();
 	const { remainingCards } = useStore();
 
-	const dataFetchDeskID = queryInfo.data?.data;
-	const deskID = remainingCards && remainingCards <= countCardsInPlay ? 'new' : dataFetchDeskID;
-	if (remainingCards !== null && remainingCards < 2) console.log(remainingCards);
+	const deskID: string = remainingCards !== null && remainingCards < countCardsInPlay ? 'new' : data?.data?.deck_id;
 
-	if (deskID === 'new') console.log(deskID);
-
-
-	return queryInfo.isLoading ? (
+	return isLoading ? (
 		<Spinner />
 	) : (
 		<Play deskID={deskID} />
