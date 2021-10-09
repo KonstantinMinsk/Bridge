@@ -9,12 +9,12 @@ interface RouteValue {
 }
 
 const Routes: { [key: string]: RouteValue } = {
-  Home: { path: '/', name: 'Bridge', component: BridgePage },
-  Login: {
-    path: '/login',
-    name: 'LOGIN',
-    component: LoginPage,
-  },
+	Home: { path: '/', name: 'Bridge', component: BridgePage },
+	Login: {
+		path: '/login',
+		name: 'LogOut',
+		component: LoginPage,
+	},
 };
 
 export default Routes;

@@ -5,21 +5,26 @@ import AppMenu from './components/AppMenu';
 import './index.css';
 import LoginPage from './pages/LoginPage';
 import BridgePage from './pages/BridgePage';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 export default function App() {
-  return (
-    <div className="App">
-      <AppMenu />
-      <Grid container alignItems="stretch" justifyContent="center">
-        <Switch>
-          <Route path="/" exact>
-            <BridgePage />
-          </Route>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-        </Switch>
-      </Grid>
-    </div>
-  );
+	return (
+		<div className="App">
+			<AppMenu />
+			<Grid container alignItems="stretch" justifyContent="center">
+				<Switch>
+
+					<PrivateRoute
+						path="/"
+						exact
+					>
+						<BridgePage />
+					</PrivateRoute>
+					<Route path="/login">
+						<LoginPage />
+					</Route>
+				</Switch>
+			</Grid>
+		</div>
+	);
 }

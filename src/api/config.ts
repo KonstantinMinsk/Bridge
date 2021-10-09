@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://deckofcardsapi.com/api/deck/',
-  responseType: 'json',
+	baseURL: 'https://deckofcardsapi.com/api/deck/',
+	responseType: 'json',
 });
 export default api;

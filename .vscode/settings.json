@@ -2,7 +2,11 @@
   "prettier.trailingComma": "all",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "typescript.suggestionActions.enabled": false,
-  "prettier.requireConfig": true,
   "prettier.jsxBracketSameLine": true,
-  "prettier.printWidth": 120
+  "prettier.printWidth": 120,
+  // "editor.formatOnSave": false,
+  // "prettier.enable": false,
+  // "editor.codeActionsOnSave": {
+  //   "source.fixAll.eslint": false
+  // },
 }

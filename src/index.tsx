@@ -8,13 +8,13 @@ import App from './App';
 const queryClient = new QueryClient();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <Router>
-        <App />
-      </Router>
-    </QueryClientProvider>
-  </React.StrictMode>,
-  // eslint-disable-next-line comma-dangle
-  document.getElementById('root')
+	<React.StrictMode>
+		<QueryClientProvider client={queryClient}>
+			<Router>
+				<App />
+			</Router>
+		</QueryClientProvider>
+	</React.StrictMode>,
+	// eslint-disable-next-line comma-dangle
+	document.getElementById('root')
 );

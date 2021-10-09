@@ -37,7 +37,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "eslint": "eslint --fix ."
   },
   "eslintConfig": {
     "extends": [
@@ -58,37 +59,57 @@
           "**/*.ts?(x)"
         ],
         "rules": {
-          "max-len": [
-            "error",
-            160
-          ],
-          "no-shadow": "off",
-          "no-use-before-define": "off",
+          "max-len": 0,
+          "strict": 0,
+          "no-plusplus": 0,
+          "indent": [2, "tab", { "SwitchCase": 1, "VariableDeclarator": 1, "ignoredNodes": ["TemplateLiteral"] }],
+          "no-tabs": 0,
+          "react/prop-types": 0,
+          "react/jsx-indent": [2, "tab"],
+          "react/jsx-indent-props": [2, "tab"],
+          "react/jsx-props-no-spreading":0,
+          "react/no-array-index-key": 1,
+          "react/jsx-one-expression-per-line": 0,
+          "one-var": 0,
+          "no-underscore-dangle": 0,
+          "react/state-in-constructor": 0,
+          "react/destructuring-assignment": 1,
+          "template-curly-spacing" : "off",
           "object-curly-newline": 0,
-          "arrow-body-style": [
-            "error",
-            "always"
-          ],
+          "react-hooks/rules-of-hooks": 2,
+          "react-hooks/exhaustive-deps": 1,
+          "no-multiple-empty-lines": [2, { "max": 2 }],
+          "jsx-a11y/anchor-is-valid": [ "error", {
+           "components": [ "Link" ],
+           "specialLink": [ "hrefLeft", "hrefRight", "to" ],
+           "aspects": [ "invalidHref", "preferButton" ]
+          }],
+          "jsx-a11y/click-events-have-key-events": 1,
+          "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+          "import/prefer-default-export": 0,
           "import/extensions": [
-            "error",
-            "ignorePackages",
-            {
-              "ts": "never",
-              "tsx": "never"
-            }
+           1,
+           { "extensions": [".ts", ".tsx", ".js", ".jsx" ]}
           ],
+          "no-use-before-define": "off",
+          "@typescript-eslint/no-use-before-define": ["error"],
           "react/jsx-filename-extension": [
-            1,
-            {
-              "extensions": [
-                ".js",
-                ".jsx",
-                ".tsx",
-                ".ts"
-              ]
-            }
-          ]
-        },
+           1,
+           { "extensions": [".tsx", ".jsx"] }
+          ],
+          "react/require-default-props": 0,
+          "react/no-unused-prop-types": 1,
+          "no-shadow": 0,
+          "@typescript-eslint/no-empty-function": ["error", { "allow": ["arrowFunctions"]}],
+          "@typescript-eslint/ban-ts-comment": 1,
+          "@typescript-eslint/no-shadow": ["error"],
+          "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state", "acc"] }],
+          "no-unused-vars": [0],
+          "@typescript-eslint/no-unused-vars": ["error", {
+           "varsIgnorePattern": "^_",
+           "argsIgnorePattern": "^_"
+          }]
+         },
         "settings": {
           "import/resolver": {
             "typescript": {}

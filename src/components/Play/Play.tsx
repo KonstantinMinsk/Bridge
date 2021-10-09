@@ -8,121 +8,131 @@ import { optionChooseCards } from '../../enum';
 import { bidAmount, namesCards, valueCards } from '../../constants';
 import useStore from '../../store';
 
-export default function Play({ dataFetchDeskID }: { dataFetchDeskID: any }) {
-  const { balance, payForPlay, incrementBalance } = useStore();
-  const [winner, setWinner] = useState<boolean | null>(null);
-  const [isModePlay, setIsModePlay] = useState<boolean | null>(null);
-  const [selectedCard, setSelectedCard] = useState<string | null>(null);
-  const classes = useStyles({ isModePlay });
-  const fetchPairCard = useFetchPairCard(dataFetchDeskID, isModePlay);
-  const [cards, setCards] = useState<any[]>([]);
+export default function Play({ deskID }: { deskID: any }) {
+	const { balance, payForPlay, incrementBalance } = useStore();
+	const [winner, setWinner] = useState<boolean | null>(null);
+	const [isModePlay, setIsModePlay] = useState<boolean | null>(null);
+	const [selectedCard, setSelectedCard] = useState<string | null>(null);
+	const classes = useStyles({ isModePlay });
+	const fetchPairCard = useFetchPairCard(deskID, isModePlay);
+	const { remainingCards, updateRemainingCards } = useStore();
+	const [cards, setCards] = useState<any[]>([]);
 
-  useEffect(() => {
-    const data: any = fetchPairCard?.data?.data;
-    if (data?.cards.length) setCards(data.cards);
-  }, [isModePlay, fetchPairCard?.data?.data]);
+	if (!remainingCards) console.log(fetchPairCard);
 
-  const onHandlePlay = () => {
-    payForPlay(bidAmount);
-    setSelectedCard(null);
-    setWinner(null);
-    return setIsModePlay((prev) => {
-      return !prev;
-    });
-  };
-  const definedWinner = (chosenCard: number) => {
-    const selectedCard = cards[chosenCard]?.value;
-    const otherCard = cards.filter((_, index) => { return index !== chosenCard; })[0]?.value;
-    return valueCards[selectedCard] > valueCards[otherCard];
-  };
+	useEffect(() => {
+		const data: any = fetchPairCard?.data?.data;
+		if (data?.cards.length) {
+			setCards(data.cards);
+			updateRemainingCards(data.remaining);
+		}
+	}, [isModePlay, fetchPairCard?.data?.data, updateRemainingCards]);
 
-  const onHandleCard = (chosenCard: number) => {
-    const isWinnner = definedWinner(chosenCard);
-    setWinner(isWinnner);
-    if (isWinnner) incrementBalance(bidAmount * 2);
-    setSelectedCard(namesCards[chosenCard]);
-    setIsModePlay((prev) => {
-      return !prev;
-    });
-  };
+	const onHandlePlay = () => {
+		payForPlay(bidAmount);
+		setSelectedCard(null);
+		setWinner(null);
+		return setIsModePlay((prev) => !prev);
+	};
+	const definedWinner = (chosenCard: number) => {
+		const card = cards[chosenCard]?.value;
+		const otherCard = cards.filter((_, index) => index !== chosenCard)[0]?.value;
+		return valueCards[card] > valueCards[otherCard];
+	};
 
-  const leftCard = <img src={cards.length && cards[optionChooseCards.Left]?.image} alt="card" />;
-  const rightCard = useMemo(() => { return <img src={cards.length && cards[optionChooseCards.Right]?.image} alt="card" />; }, [cards]);
-  const resultText = typeof winner === 'boolean' && winner ? `Вы выйграли ${bidAmount * 2}$` : `Вы проиграли ${bidAmount}`;
+	const onHandleCard = (chosenCard: number) => {
+		const isWinnner = definedWinner(chosenCard);
+		setWinner(isWinnner);
+		if (isWinnner) incrementBalance(bidAmount * 2);
+		setSelectedCard(namesCards[chosenCard]);
+		setIsModePlay((prev) => !prev);
+	};
 
-  const buttonPlay = !isModePlay ? (
-    <Button
-      size="large"
-      color="primary"
-      variant="contained"
-      content={typeof isModePlay === 'boolean' ? 'Сыграем еще' : 'Играть'}
-      onClick={onHandlePlay}
-    />
-  ) : null;
+	const leftCard = <img src={cards.length && cards[optionChooseCards.Left]?.image} alt="card" />;
+	const rightCard = useMemo(() => <img src={cards.length && cards[optionChooseCards.Right]?.image} alt="card" />, [cards]);
+	const resultText = typeof winner === 'boolean' && winner ? `Вы выйграли ${bidAmount * 2}$` : `Вы проиграли ${bidAmount}`;
 
-  const playButtons = fetchPairCard?.isFetching ? (
-    'Loading ...'
-  ) : (
-    <>
-      <Button
-        size="large"
-        color="primary"
-        variant="contained"
-        content="Слева"
-        onClick={() => {
-          return onHandleCard(optionChooseCards.Left);
-        }}
-      />
-      <Divider orientation="vertical" className={classes.divider} />
-      <Button
-        size="large"
-        color="primary"
-        variant="contained"
-        content="Справа"
-        onClick={() => {
-          return onHandleCard(optionChooseCards.Right);
-        }}
-      />
-    </>
-  );
+	const buttonPlay = !isModePlay ? (
+		<Button
+			type="button"
+			size="large"
+			color="primary"
+			variant="contained"
+			content={typeof isModePlay === 'boolean' ? 'Сыграем еще' : 'Играть'}
+			onClick={onHandlePlay}
+		/>
+	) : null;
 
-  return (
-    <>
-      <Typography className={classes.balance} variant="h5">
-        {`Balance: ${balance}$`}
-      </Typography>
-      <div className={classes.containerPlay}>
-        <Typography variant="h3">
-          { typeof winner === 'boolean' ? resultText : 'Кто выйграет?'}
-        </Typography>
-        <Typography variant="body1">
-          {typeof winner === 'boolean'
-            ? 'Сыграй в игру еще раз'
-            : 'Сыграй в игру и испытай удачу'}
-        </Typography>
-        <Grid container item xs={12} justifyContent="center">
-          <Grid item xs={11} sm={8} className={classes.containerCards}>
-            {!selectedCard ? (
-              <div className={classes.card}>
-                <span className={classes.questionMark}>?</span>
-              </div>
-            ) : (
-              leftCard
-            )}
-            <div className={classes.buttons}>
-              {buttonPlay}
-              {isModePlay && playButtons}
-            </div>
-            {!selectedCard ? (
-              <div className={classes.card}>
-                <span className={classes.questionMark}>?</span>
-              </div>
-            ) : (
-              rightCard
-            )}
-          </Grid>
-        </Grid>
-      </div>
-    </>
-  );
+	const playButtons = (
+		<>
+			<Button
+				type="button"
+				size="large"
+				color="primary"
+				variant="contained"
+				content="Слева"
+				onClick={() => onHandleCard(optionChooseCards.Left)}
+			/>
+			<Divider orientation="vertical" className={classes.divider} />
+			<Button
+				type="button"
+				size="large"
+				color="primary"
+				variant="contained"
+				content="Справа"
+				onClick={() => onHandleCard(optionChooseCards.Right)}
+			/>
+		</>
+	);
+
+	if (fetchPairCard.isError) {
+		return <Typography>`${fetchPairCard.error}`</Typography>;
+	}
+
+	return (
+		<>
+			<Typography className={classes.balance} variant="h5">
+				{`Balance: ${balance}$`}
+			</Typography>
+			<div className={classes.containerPlay}>
+				<Typography variant="h3">
+					{ typeof winner === 'boolean' ? resultText : 'Кто выйграет?'}
+				</Typography>
+				<Typography variant="body1">
+					{typeof winner === 'boolean'
+						? 'Сыграй в игру еще раз'
+						: 'Сыграй в игру и испытай удачу'}
+				</Typography>
+				<Grid container item xs={12} justifyContent="center">
+					<Grid item xs={11} sm={8} className={classes.containerCards}>
+						{!selectedCard ? (
+							<div className={classes.card}>
+								<span className={classes.questionMark}>?</span>
+							</div>
+						) : (
+							leftCard
+						)}
+						<div className={classes.buttons}>
+							{/* {remainingCards !== null && remainingCards < countCardsInPlay
+								&& <Typography variant="h5">Тусуем колоду. Пожалуйста, подождите ...</Typography>} */}
+							{fetchPairCard.isLoading ? <Typography align="center">Loading...</Typography>
+								: (
+									<>
+										{buttonPlay}
+										{isModePlay && playButtons}
+									</>
+								)}
+						</div>
+						{!selectedCard ? (
+							<div className={classes.card}>
+								<span className={classes.questionMark}>?</span>
+							</div>
+						) : (
+							rightCard
+						)}
+					</Grid>
+				</Grid>
+			</div>
+		</>
+	);
 }

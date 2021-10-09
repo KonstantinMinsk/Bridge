@@ -6,4 +6,5 @@ export interface ButtonProps {
   content: React.ReactNode;
   size?: 'small' | 'medium' | 'large';
   onClick?: any;
+  type?: 'button' | 'reset' | 'submit' | undefined
 }
