@@ -2,8 +2,9 @@ import { useQuery } from 'react-query';
 import { apiCards } from '../../api';
 
 const useFetchDeskID = () => {
-	const result = useQuery('newDeskID', apiCards.getNewDeskID);
-	return result;
+	const queryInfo = useQuery('newDeskID', apiCards.getNewDeskID);
+
+	return queryInfo;
 };
 
 export default useFetchDeskID;

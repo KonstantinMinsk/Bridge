@@ -13,7 +13,6 @@ export default function App() {
 			<AppMenu />
 			<Grid container alignItems="stretch" justifyContent="center">
 				<Switch>
-
 					<PrivateRoute
 						path="/"
 						exact

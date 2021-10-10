@@ -4,11 +4,16 @@ type TStore = {
     balance: number;
     incrementBalance: (money: number) => void;
     payForPlay: (bid: number) => void;
+
 	isAuth: boolean;
 	loginSuccess: () => void;
 	logoutSuccess: () => void;
+	loginError: boolean;
+	activeLoginError: () => void;
+	inactiveLoginError: () => void;
+
 	remainingCards: number | null;
-	updateRemainingCards: (remainingCards: number) => void;
+	updateRemainingCards: (remainingCards: number | null) => void;
 };
 
 const checkLoginLocalStorage = (): boolean => {
@@ -43,6 +48,14 @@ const useStore = create<TStore>(
 				// do noting
 			}
 		},
+		loginError: false,
+		activeLoginError: () => {
+			set(() => ({ loginError: true }));
+		},
+		inactiveLoginError: () => {
+			set(() => ({ loginError: false }));
+		},
+
 		remainingCards: null,
 		updateRemainingCards: (remainingCards) => {
 			set(() => ({ remainingCards }));

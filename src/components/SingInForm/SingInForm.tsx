@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import { Input, Button } from '../../UI';
 import useStyles from './styles';
 import { SingInFormProps } from '../../interfaces/UI';
 import useStore from '../../store';
 import { apiUser } from '../../api';
+import { userError } from '../../constants';
 
 export default function SingInForm() {
 	const classes = useStyles();
-	const { isAuth, loginSuccess } = useStore();
+	const { isAuth, loginSuccess, loginError, activeLoginError, inactiveLoginError } = useStore();
 
 	const [formState, setFormState] = useState<SingInFormProps>(
 		{ username: '', password: '' },
@@ -24,9 +25,12 @@ export default function SingInForm() {
 				const isLogin = await apiUser.login(formState);
 				if (isLogin) {
 					loginSuccess();
+					if (loginError) inactiveLoginError();
+				} else {
+					activeLoginError();
 				}
 			} catch (err) {
-				console.log(err);
+				// do noting
 			}
 		})();
 	};
@@ -48,13 +52,13 @@ export default function SingInForm() {
 				<h2>Sing in to your account</h2>
 				<Input
 					variant="outlined"
-					lable="Login"
+					label="Login"
 					onChange={onChange}
 					name="username"
 				/>
 				<Input
 					variant="outlined"
-					lable="Parol"
+					label="Parol"
 					onChange={onChange}
 					name="password"
 				/>
@@ -65,6 +69,7 @@ export default function SingInForm() {
 					size="large"
 					content="Sing in"
 				/>
+				{loginError && <Typography variant="h6" color="secondary">{userError}</Typography>}
 			</form>
 		</Grid>
 	);

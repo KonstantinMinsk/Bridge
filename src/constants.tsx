@@ -2,11 +2,9 @@ import { optionChooseCards } from './enum';
 
 export const countCardsInPlay: number = 2;
 
-export const userErrors: { [key: number]: string } = {
-	0: 'Имя пользователя или пароль введены не верно',
-};
+export const userError: string = 'Имя пользователя или пароль введены неверно';
 
-export const bidAmount = 5;
+export const bidAmount: number = 5;
 
 export const valueCards: { [index: string]: number } = {
 	2: 2,
@@ -23,10 +21,6 @@ export const valueCards: { [index: string]: number } = {
 	KING: 50,
 	ACE: 100,
 };
-
-// export const userMotivationText { [key: number]: string } = {
-//   0: 'Неизвестная ошибка, пожалуйста, попробуйте ещё раз',
-// };
 
 export const namesCards: { [index: number]: string } = {
 	[optionChooseCards.Left]: 'Left',

@@ -18,13 +18,14 @@ export default function Play({ deskID }: { deskID: any }) {
 	const { updateRemainingCards } = useStore();
 	const [cards, setCards] = useState<any[]>([]);
 
+	const { isLoading, data: { cards: currentCard = [], remaining = null } = {} } = fetchPairCard;
+
 	useEffect(() => {
-		const data: any = fetchPairCard?.data?.data;
-		if (data?.cards.length) {
-			setCards(data.cards);
-			updateRemainingCards(data.remaining);
+		if (currentCard.length) {
+			setCards(currentCard);
+			updateRemainingCards(remaining);
 		}
-	}, [isModePlay, fetchPairCard?.data?.data, updateRemainingCards]);
+	}, [currentCard, remaining]);
 
 	const onHandlePlay = () => {
 		payForPlay(bidAmount);
@@ -39,9 +40,9 @@ export default function Play({ deskID }: { deskID: any }) {
 	};
 
 	const onHandleCard = (chosenCard: number) => {
-		const isWinnner = definedWinner(chosenCard);
-		setWinner(isWinnner);
-		if (isWinnner) incrementBalance(bidAmount * 2);
+		const isWinner = definedWinner(chosenCard);
+		setWinner(isWinner);
+		if (isWinner) incrementBalance(bidAmount * 2);
 		setSelectedCard(namesCards[chosenCard]);
 		setIsModePlay((prev) => !prev);
 	};
@@ -61,7 +62,7 @@ export default function Play({ deskID }: { deskID: any }) {
 		/>
 	) : null;
 
-	const playButtons = (
+	const selectionButtons = (
 		<>
 			<Button
 				type="button"
@@ -83,9 +84,38 @@ export default function Play({ deskID }: { deskID: any }) {
 		</>
 	);
 
-	if (fetchPairCard.isError) {
-		return <Typography>`${fetchPairCard.error}`</Typography>;
-	}
+	const gameOver = balance < bidAmount && winner === false;
+
+	const content = (
+		<>
+			{!selectedCard ? (
+				<div className={classes.card}>
+					<span className={classes.questionMark}>?</span>
+				</div>
+			) : (
+				leftCard
+			)}
+			<div className={classes.buttons}>
+				{gameOver
+					&& <Typography variant="h5" align="center">Game over! <br /> Вы проиграли ...</Typography>}
+				{isLoading
+					? <Typography align="center">Loading...</Typography>
+					: (
+						<>
+							{!gameOver && buttonPlay}
+							{isModePlay && selectionButtons}
+						</>
+					)}
+			</div>
+			{!selectedCard ? (
+				<div className={classes.card}>
+					<span className={classes.questionMark}>?</span>
+				</div>
+			) : (
+				rightCard
+			)}
+		</>
+	);
 
 	return (
 		<>
@@ -103,31 +133,7 @@ export default function Play({ deskID }: { deskID: any }) {
 				</Typography>
 				<Grid container item xs={12} justifyContent="center">
 					<Grid item xs={11} sm={8} className={classes.containerCards}>
-						{!selectedCard ? (
-							<div className={classes.card}>
-								<span className={classes.questionMark}>?</span>
-							</div>
-						) : (
-							leftCard
-						)}
-						<div className={classes.buttons}>
-							{/* {remainingCards !== null && remainingCards < countCardsInPlay
-								&& <Typography variant="h5">Тусуем колоду. Пожалуйста, подождите ...</Typography>} */}
-							{fetchPairCard.isLoading ? <Typography align="center">Loading...</Typography>
-								: (
-									<>
-										{buttonPlay}
-										{isModePlay && playButtons}
-									</>
-								)}
-						</div>
-						{!selectedCard ? (
-							<div className={classes.card}>
-								<span className={classes.questionMark}>?</span>
-							</div>
-						) : (
-							rightCard
-						)}
+						{content}
 					</Grid>
 				</Grid>
 			</div>

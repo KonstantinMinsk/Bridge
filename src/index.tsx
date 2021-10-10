@@ -15,6 +15,5 @@ ReactDOM.render(
 			</Router>
 		</QueryClientProvider>
 	</React.StrictMode>,
-	// eslint-disable-next-line comma-dangle
-	document.getElementById('root')
+	document.getElementById('root'),
 );

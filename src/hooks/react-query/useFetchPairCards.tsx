@@ -1,11 +1,13 @@
+/* eslint-disable no-undef */
 import { useQuery } from 'react-query';
 import { apiCards } from '../../api';
 
 const useFetchPairCard = (idDesk: string, isModePlay: boolean | null) => {
-	const pairCards = useQuery('pairCards', () => apiCards.getPairCard(idDesk), {
+	const queryInfo = useQuery('pairCards', () => apiCards.getPairCard(idDesk), {
 		enabled: !!isModePlay,
 	});
-	return pairCards;
+
+	return queryInfo;
 };
 
 export default useFetchPairCard;

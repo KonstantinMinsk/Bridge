@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import Play from '../components/Play';
 import { useFetchDeskID } from '../hooks/react-query';
@@ -6,10 +7,12 @@ import useStore from '../store';
 import { countCardsInPlay } from '../constants';
 
 const BridgePage = () => {
-	const { isLoading, data }: any = useFetchDeskID();
+	const fetchDeskID = useFetchDeskID();
 	const { remainingCards } = useStore();
 
-	const deskID: string = remainingCards !== null && remainingCards < countCardsInPlay ? 'new' : data?.data?.deck_id;
+	const { isLoading, data: { deck_id } = {} } = fetchDeskID;
+
+	const deskID: string | undefined = remainingCards !== null && remainingCards < countCardsInPlay ? 'new' : deck_id;
 
 	return isLoading ? (
 		<Spinner />
