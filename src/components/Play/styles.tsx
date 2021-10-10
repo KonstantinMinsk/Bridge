@@ -8,7 +8,7 @@ const stylesFlex = createStyles({
 	},
 });
 
-const useStyles = makeStyles(() => createStyles({
+const useStyles = makeStyles((theme) => createStyles({
 	balance: {
 		textAlign: 'center',
 		marginTop: 20,
@@ -18,7 +18,6 @@ const useStyles = makeStyles(() => createStyles({
 		padding: '20px 0 100px 0',
 		width: '100%',
 		backgroundColor: '#3f51b515',
-		height: 500,
 		...stylesFlex.flexColumn,
 	},
 	containerCards: {
@@ -27,8 +26,14 @@ const useStyles = makeStyles(() => createStyles({
 		display: 'flex',
 		justifyContent: 'space-between',
 		alignSelf: 'center',
+		[theme.breakpoints.down('xs')]: {
+			marginTop: 16,
+			flexDirection: 'column',
+			alignItems: 'center',
+		},
 	},
 	buttons: {
+		margin: 20,
 		display: 'flex',
 		justifyContent: 'space-evenly',
 		alignItems: ({ isModePlay }: { isModePlay: boolean | null }) => (isModePlay ? 'space-between' : 'center'),
@@ -37,10 +42,10 @@ const useStyles = makeStyles(() => createStyles({
 		margin: '0 16px 0',
 	},
 	card: {
-		border: '2px solid #000',
-		borderRadius: 4,
-		width: 226,
-		height: 314,
+		border: ({ isModePlay }: { isModePlay: boolean | null }) => (isModePlay ? '2px solid #000' : 'none'),
+		borderRadius: 16,
+		width: 220,
+		height: 308,
 		...stylesFlex.flexColumn,
 	},
 	questionMark: {

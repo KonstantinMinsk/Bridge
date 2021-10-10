@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import Grid from '@material-ui/core/Grid';
-import { Typography, Divider } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
+import { Grid, Typography, Divider, useMediaQuery } from '@material-ui/core';
 import { Button } from '../../UI';
 import useStyles from './styles';
 import { useFetchPairCard } from '../../hooks/react-query';
@@ -9,14 +9,15 @@ import { bidAmount, namesCards, valueCards } from '../../constants';
 import useStore from '../../store';
 
 export default function Play({ deskID }: { deskID: any }) {
-	const { balance, payForPlay, incrementBalance } = useStore();
+	const theme = useTheme();
+	const mobile = useMediaQuery(theme.breakpoints.down('sm'));
 	const [winner, setWinner] = useState<boolean | null>(null);
 	const [isModePlay, setIsModePlay] = useState<boolean | null>(null);
 	const [selectedCard, setSelectedCard] = useState<string | null>(null);
-	const classes = useStyles({ isModePlay });
-	const fetchPairCard = useFetchPairCard(deskID, isModePlay);
-	const { updateRemainingCards } = useStore();
 	const [cards, setCards] = useState<any[]>([]);
+	const { balance, payForPlay, incrementBalance, updateRemainingCards } = useStore();
+	const fetchPairCard = useFetchPairCard(deskID, isModePlay);
+	const classes = useStyles({ isModePlay });
 
 	const { isLoading, data: { cards: currentCard = [], remaining = null } = {} } = fetchPairCard;
 
@@ -49,7 +50,7 @@ export default function Play({ deskID }: { deskID: any }) {
 
 	const leftCard = <img src={cards.length && cards[optionChooseCards.Left]?.image} alt="card" />;
 	const rightCard = useMemo(() => <img src={cards.length && cards[optionChooseCards.Right]?.image} alt="card" />, [cards]);
-	const resultText = typeof winner === 'boolean' && winner ? `Вы выйграли ${bidAmount * 2}$` : `Вы проиграли ${bidAmount}`;
+	const resultText = typeof winner === 'boolean' && winner ? `Вы выйграли ${bidAmount * 2}$` : `Вы проиграли ${bidAmount}$`;
 
 	const buttonPlay = !isModePlay ? (
 		<Button
@@ -69,7 +70,7 @@ export default function Play({ deskID }: { deskID: any }) {
 				size="large"
 				color="primary"
 				variant="contained"
-				content="Слева"
+				content={mobile ? 'Сверху' : 'Слева'}
 				onClick={() => onHandleCard(optionChooseCards.Left)}
 			/>
 			<Divider orientation="vertical" className={classes.divider} />
@@ -78,7 +79,7 @@ export default function Play({ deskID }: { deskID: any }) {
 				size="large"
 				color="primary"
 				variant="contained"
-				content="Справа"
+				content={mobile ? 'Снизу' : 'Справа'}
 				onClick={() => onHandleCard(optionChooseCards.Right)}
 			/>
 		</>
@@ -88,13 +89,9 @@ export default function Play({ deskID }: { deskID: any }) {
 
 	const content = (
 		<>
-			{!selectedCard ? (
-				<div className={classes.card}>
-					<span className={classes.questionMark}>?</span>
-				</div>
-			) : (
-				leftCard
-			)}
+			<div className={classes.card}>
+				{!selectedCard ? <span className={classes.questionMark}>?</span> : leftCard}
+			</div>
 			<div className={classes.buttons}>
 				{gameOver
 					&& <Typography variant="h5" align="center">Game over! <br /> Вы проиграли ...</Typography>}
@@ -107,13 +104,10 @@ export default function Play({ deskID }: { deskID: any }) {
 						</>
 					)}
 			</div>
-			{!selectedCard ? (
-				<div className={classes.card}>
-					<span className={classes.questionMark}>?</span>
-				</div>
-			) : (
-				rightCard
-			)}
+			<div className={classes.card}>
+				{!selectedCard ? <span className={classes.questionMark}>?</span> : rightCard}
+			</div>
+
 		</>
 	);
 

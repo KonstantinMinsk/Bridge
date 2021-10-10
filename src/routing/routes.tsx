@@ -13,6 +13,10 @@ const Routes: { [key: string]: RouteValue } = {
 		path: '/',
 		name: 'Bridge',
 		component: BridgePage },
+	Bridge: {
+		path: '/Bridge',
+		name: 'Bridge',
+		component: BridgePage },
 	Login: {
 		path: '/login',
 		name: 'LogOut',

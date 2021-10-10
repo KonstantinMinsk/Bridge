@@ -1,10 +1,10 @@
-interface TPairCard<T> {
+type PairCardProps<T> = {
     image: T;
     value: T;
 }
 
 type TDataPairCard = Record<string, unknown> & {
-    cards: TPairCard[],
+    cards: PairCardProps,
     remaining: number | null
 }
 

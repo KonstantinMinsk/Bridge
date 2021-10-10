@@ -25,8 +25,8 @@ export default function AppMenu() {
 				alignItems="center"
 				justifyContent="space-between"
 			>
-				<NavLink exact to={Routes.Home.path} className={classes.link}>
-					{Routes.Home.name}
+				<NavLink exact to={Routes.Bridge.path} className={classes.link}>
+					{Routes.Bridge.name}
 				</NavLink>
 				{ isAuth
 				&& (

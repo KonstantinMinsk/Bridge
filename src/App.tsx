@@ -19,6 +19,12 @@ export default function App() {
 					>
 						<BridgePage />
 					</PrivateRoute>
+					<PrivateRoute
+						path="/Bridge"
+						exact
+					>
+						<BridgePage />
+					</PrivateRoute>
 					<Route path="/login">
 						<LoginPage />
 					</Route>
