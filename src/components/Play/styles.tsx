@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => createStyles({
 		display: 'flex',
 		justifyContent: 'space-between',
 		alignSelf: 'center',
-		[theme.breakpoints.down('xs')]: {
+		[theme.breakpoints.down('sm')]: {
 			marginTop: 16,
 			flexDirection: 'column',
 			alignItems: 'center',
@@ -47,6 +47,13 @@ const useStyles = makeStyles((theme) => createStyles({
 		width: 220,
 		height: 308,
 		...stylesFlex.flexColumn,
+		[theme.breakpoints.down('sm')]: {
+			width: 164,
+			height: 230,
+			'& img': {
+				width: '100%',
+			},
+		},
 	},
 	questionMark: {
 		marginTop: 30,

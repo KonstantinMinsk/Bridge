@@ -117,8 +117,8 @@ export default function Play({ deskID }: { deskID: any }) {
 				{`Balance: ${balance}$`}
 			</Typography>
 			<div className={classes.containerPlay}>
-				<Typography variant="h3">
-					{ typeof winner === 'boolean' ? resultText : 'Кто выйграет?'}
+				<Typography variant={mobile ? 'h4' : 'h3'}>
+					{ typeof winner === 'boolean' ? resultText : 'Кто выиграет?'}
 				</Typography>
 				<Typography variant="body1">
 					{typeof winner === 'boolean'
