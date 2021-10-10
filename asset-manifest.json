@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/Bridge/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/Bridge/static/js/main.c106cd22.chunk.js",
-    "main.js.map": "/Bridge/static/js/main.c106cd22.chunk.js.map",
+    "main.js": "/Bridge/static/js/main.d28427b1.chunk.js",
+    "main.js.map": "/Bridge/static/js/main.d28427b1.chunk.js.map",
     "runtime-main.js": "/Bridge/static/js/runtime-main.46dd9dbf.js",
     "runtime-main.js.map": "/Bridge/static/js/runtime-main.46dd9dbf.js.map",
-    "static/js/2.9cc8253c.chunk.js": "/Bridge/static/js/2.9cc8253c.chunk.js",
-    "static/js/2.9cc8253c.chunk.js.map": "/Bridge/static/js/2.9cc8253c.chunk.js.map",
+    "static/js/2.c0a0cc04.chunk.js": "/Bridge/static/js/2.c0a0cc04.chunk.js",
+    "static/js/2.c0a0cc04.chunk.js.map": "/Bridge/static/js/2.c0a0cc04.chunk.js.map",
     "index.html": "/Bridge/index.html",
     "static/css/main.6dea0f05.chunk.css.map": "/Bridge/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.9cc8253c.chunk.js.LICENSE.txt": "/Bridge/static/js/2.9cc8253c.chunk.js.LICENSE.txt"
+    "static/js/2.c0a0cc04.chunk.js.LICENSE.txt": "/Bridge/static/js/2.c0a0cc04.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.46dd9dbf.js",
-    "static/js/2.9cc8253c.chunk.js",
+    "static/js/2.c0a0cc04.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.c106cd22.chunk.js"
+    "static/js/main.d28427b1.chunk.js"
   ]
 }
