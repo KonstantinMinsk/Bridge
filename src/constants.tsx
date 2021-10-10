@@ -1,4 +1,4 @@
-import { optionChooseCards } from './enum';
+import { optionChooseCards, resultPlay } from './enum';
 
 export const countCardsInPlay: number = 2;
 
@@ -25,4 +25,10 @@ export const valueCards: { [index: string]: number } = {
 export const namesCards: { [index: number]: string } = {
 	[optionChooseCards.Left]: 'Left',
 	[optionChooseCards.Right]: 'Right',
+};
+
+export const textResultPlay: { [index: number]: string } = {
+	[resultPlay.Lost]: `Вы проиграли ${bidAmount}$`,
+	[resultPlay.Draw]: 'Ничья',
+	[resultPlay.Won]: `Вы выиграли ${bidAmount * 2}$`,
 };

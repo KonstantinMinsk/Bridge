@@ -4,14 +4,14 @@ import { Grid, Typography, Divider, useMediaQuery } from '@material-ui/core';
 import { Button } from '../../UI';
 import useStyles from './styles';
 import { useFetchPairCard } from '../../hooks/react-query';
-import { optionChooseCards } from '../../enum';
-import { bidAmount, namesCards, valueCards } from '../../constants';
+import { optionChooseCards, resultPlay } from '../../enum';
+import { bidAmount, namesCards, valueCards, textResultPlay } from '../../constants';
 import useStore from '../../store';
 
 export default function Play({ deskID }: { deskID: any }) {
 	const theme = useTheme();
 	const mobile = useMediaQuery(theme.breakpoints.down('sm'));
-	const [winner, setWinner] = useState<boolean | null>(null);
+	const [multiplierMoney, setMultiplierMoney] = useState<resultPlay | null>(null);
 	const [isModePlay, setIsModePlay] = useState<boolean | null>(null);
 	const [selectedCard, setSelectedCard] = useState<string | null>(null);
 	const [cards, setCards] = useState<any[]>([]);
@@ -31,26 +31,28 @@ export default function Play({ deskID }: { deskID: any }) {
 	const onHandlePlay = () => {
 		payForPlay(bidAmount);
 		setSelectedCard(null);
-		setWinner(null);
+		setMultiplierMoney(null);
 		return setIsModePlay((prev) => !prev);
 	};
-	const definedWinner = (chosenCard: number) => {
+	const definedWinner = (chosenCard: number): resultPlay => {
 		const card = cards[chosenCard]?.value;
 		const otherCard = cards.filter((_, index) => index !== chosenCard)[0]?.value;
-		return valueCards[card] > valueCards[otherCard];
+		if (valueCards[card] === valueCards[otherCard]) return resultPlay.Draw;
+		if (valueCards[card] > valueCards[otherCard]) return resultPlay.Won;
+		return resultPlay.Lost;
 	};
 
 	const onHandleCard = (chosenCard: number) => {
-		const isWinner = definedWinner(chosenCard);
-		setWinner(isWinner);
-		if (isWinner) incrementBalance(bidAmount * 2);
+		const multiplier: resultPlay = definedWinner(chosenCard);
+		setMultiplierMoney(multiplier);
+		incrementBalance(bidAmount * multiplier);
 		setSelectedCard(namesCards[chosenCard]);
 		setIsModePlay((prev) => !prev);
 	};
 
 	const leftCard = <img src={cards.length && cards[optionChooseCards.Left]?.image} alt="card" />;
 	const rightCard = useMemo(() => <img src={cards.length && cards[optionChooseCards.Right]?.image} alt="card" />, [cards]);
-	const resultText = typeof winner === 'boolean' && winner ? `Вы выйграли ${bidAmount * 2}$` : `Вы проиграли ${bidAmount}$`;
+	const resultText = typeof multiplierMoney === 'number' && textResultPlay[multiplierMoney];
 
 	const buttonPlay = !isModePlay ? (
 		<Button
@@ -85,7 +87,7 @@ export default function Play({ deskID }: { deskID: any }) {
 		</>
 	);
 
-	const gameOver = balance < bidAmount && winner === false;
+	const gameOver = balance < bidAmount && typeof multiplierMoney === 'number';
 
 	const content = (
 		<>
@@ -118,10 +120,10 @@ export default function Play({ deskID }: { deskID: any }) {
 			</Typography>
 			<div className={classes.containerPlay}>
 				<Typography variant={mobile ? 'h4' : 'h3'}>
-					{ typeof winner === 'boolean' ? resultText : 'Кто выиграет?'}
+					{ typeof multiplierMoney === 'number' ? resultText : 'Кто выиграет?'}
 				</Typography>
 				<Typography variant="body1">
-					{typeof winner === 'boolean'
+					{typeof multiplierMoney === 'number'
 						? 'Сыграй в игру еще раз'
 						: 'Сыграй в игру и испытай удачу'}
 				</Typography>
