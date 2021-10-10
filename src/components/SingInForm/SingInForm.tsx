@@ -52,13 +52,13 @@ export default function SingInForm() {
 				<h2>Sing in to your account</h2>
 				<Input
 					variant="outlined"
-					label="Login"
+					label="username"
 					onChange={onChange}
 					name="username"
 				/>
 				<Input
 					variant="outlined"
-					label="Parol"
+					label="password"
 					onChange={onChange}
 					name="password"
 				/>

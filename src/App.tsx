@@ -6,6 +6,7 @@ import './index.css';
 import LoginPage from './pages/LoginPage';
 import BridgePage from './pages/BridgePage';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import Routes from './routing/routes';
 
 export default function App() {
 	return (
@@ -20,12 +21,12 @@ export default function App() {
 						<BridgePage />
 					</PrivateRoute>
 					<PrivateRoute
-						path="/Bridge"
+						path={Routes.Home.path}
 						exact
 					>
 						<BridgePage />
 					</PrivateRoute>
-					<Route path="/login">
+					<Route path={Routes.Login.path}>
 						<LoginPage />
 					</Route>
 				</Switch>
