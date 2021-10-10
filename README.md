@@ -1,4 +1,5 @@
 # Game Bridge
+# Link to the web App https://konstantinminsk.github.io/Bridge/
 
 ## Для входа в игру введите 
 * username - admin
