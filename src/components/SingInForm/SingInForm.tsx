@@ -7,6 +7,7 @@ import { SingInFormProps } from '../../interfaces/UI';
 import useStore from '../../store';
 import { apiUser } from '../../api';
 import { userError } from '../../constants';
+import Routes from '../../routing/routes';
 
 export default function SingInForm() {
 	const classes = useStyles();
@@ -39,7 +40,7 @@ export default function SingInForm() {
 		return (
 			<Redirect
 				to={{
-					pathname: '/',
+					pathname: `${Routes.Home.path}`,
 				}}
 			/>
 		);
